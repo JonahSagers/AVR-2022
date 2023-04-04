@@ -25,6 +25,7 @@ class Sandbox(MQTTModule):
         # This runs some setup code that we still want to occur, even though
         # we're replacing the `__init__()` method.
         super().__init__()
+        logger.debug("Hello world (init)")
         # Here, we're creating a dictionary of MQTT topic names to method handles.
         # A dictionary is a data structure that allows use to
         # obtain values based on keys. Think of a dictionary of state names as keys
@@ -60,6 +61,7 @@ class Sandbox(MQTTModule):
         # Pro-tip, if you set `python.analysis.typeCheckingMode` to `basic` in you
         # VS Code preferences, you'll get a red underline if your payload doesn't
         # match the expected format for the topic.
+        logger.debug("Hello world (servo)")
         self.send_message(
             "avr/pcm/set_servo_open_close",
             {"servo": 0, "action": "open"},
