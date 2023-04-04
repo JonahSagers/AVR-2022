@@ -38,19 +38,19 @@ class Sandbox(MQTTModule):
     # This is what executes whenever a message is received on the "avr/fcm/velocity"
     # topic. The content of the message is passed to the `payload` argument.
     # The `AvrFcmVelocityMessage` class here is beyond the scope of AVR.
-    def show_velocity(self, payload: AvrFcmVelocityPayload) -> None:
-        vx = payload["vX"]
-        vy = payload["vY"]
-        vz = payload["vZ"]
-        v_ms = (vx, vy, vz)
+    # def show_velocity(self, payload: AvrFcmVelocityPayload) -> None:
+    #     vx = payload["vX"]
+    #     vy = payload["vY"]
+    #     vz = payload["vZ"]
+    #     v_ms = (vx, vy, vz)
 
-        # Use methods like `debug`, `info`, `success`, `warning`, `error`, and
-        # `critical` to log data that you can see while your code runs.
+    #     # Use methods like `debug`, `info`, `success`, `warning`, `error`, and
+    #     # `critical` to log data that you can see while your code runs.
 
-        # This is what is known as a "f-string". This allows you to easily inject
-        # variables into a string without needing to combine lots of strings together.
-        # https://realpython.com/python-f-strings/#f-strings-a-new-and-improved-way-to-format-strings-in-python
-        logger.debug(f"Velocity information: {v_ms} m/s")
+    #     # This is what is known as a "f-string". This allows you to easily inject
+    #     # variables into a string without needing to combine lots of strings together.
+    #     # https://realpython.com/python-f-strings/#f-strings-a-new-and-improved-way-to-format-strings-in-python
+    #     logger.debug(f"Velocity information: {v_ms} m/s")
 
     # Here is an example on how to publish a message to an MQTT topic to
     # perform an action
