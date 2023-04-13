@@ -4,7 +4,7 @@
 # and is receiving the proper payload as well.
 from bell.avr.mqtt.client import MQTTModule
 from bell.avr.mqtt.payloads import AvrFcmVelocityPayload
-from bell.avr.mqtt.payloads import AvrAutonomousPayload
+#from bell.avr.mqtt.payloads import AvrAutonomousPayload
 
 # This imports the third-party Loguru library which helps make logging way easier
 # and more useful.
