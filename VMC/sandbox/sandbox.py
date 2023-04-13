@@ -28,16 +28,10 @@ class Sandbox(MQTTModule):
         super().__init__()
         logger.debug("Hello world (init)")
 
-        self.send_message(
-            "avr/pcm/set_servo_open_close",
-            {"servo": 3, "action": "open"},
-        )
+        self.send_message("avr/pcm/set_servo_open_close",{"servo": 3, "action": "open"})
         logger.debug("Servo Opened")
         time.sleep(1)
-        self.send_message(
-            "avr/pcm/set_servo_open_close",
-            {"servo": 3, "action": "close"},
-        )
+        self.send_message("avr/pcm/set_servo_open_close",{"servo": 3, "action": "close"})
         logger.debug("Servo Closed")
         # Here, we're creating a dictionary of MQTT topic names to method handles.
         # A dictionary is a data structure that allows use to
@@ -78,10 +72,7 @@ class Sandbox(MQTTModule):
         # VS Code preferences, you'll get a red underline if your payload doesn't
         # match the expected format for the topic.
         logger.debug("Hello world (servo)")
-        self.send_message(
-            "avr/pcm/set_servo_open_close",
-            {"servo": 0, "action": "open"},
-        )
+        self.send_message("avr/pcm/set_servo_open_close",{"servo": 3, "action": "open"})
 
 
 if __name__ == "__main__":
