@@ -4,6 +4,7 @@
 # and is receiving the proper payload as well.
 from bell.avr.mqtt.client import MQTTModule
 from bell.avr.mqtt.payloads import AvrFcmVelocityPayload
+from bell.avr.mqtt.payloads import AvrAutonomousPayload
 
 # This imports the third-party Loguru library which helps make logging way easier
 # and more useful.
@@ -40,7 +41,12 @@ class Sandbox(MQTTModule):
         # we're creating a dictionary of MQTT topics, and the methods we want to run
         # whenever a message arrives on that topic.
         # --- self.topic_map = {"avr/fcm/velocity": self.show_velocity}
+    def on_autonomous_message(self, payload: AvrAutonomousPayload) -> None:
+        self.enabled = payload["enable"]
 
+    def autonomous_code(self) -> None:
+        #while self.enabled:
+        logger.debug("button pressed")
     # Here's an example of a custom message handler here.
     # This is what executes whenever a message is received on the "avr/fcm/velocity"
     # topic. The content of the message is passed to the `payload` argument.
