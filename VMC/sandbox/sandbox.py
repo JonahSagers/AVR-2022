@@ -29,7 +29,7 @@ class Sandbox(MQTTModule):
 
         self.send_message(
             "avr/pcm/set_servo_open_close",
-            {"servo": 0, "action": "open"},
+            {"servo": 3, "action": "open"},
         )
         logger.debug("Hello world (servo)")
         # Here, we're creating a dictionary of MQTT topic names to method handles.
