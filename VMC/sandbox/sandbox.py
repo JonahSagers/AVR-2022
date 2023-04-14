@@ -3,7 +3,7 @@
 # It also helps us make sure that our code is sending the proper payload on a topic
 # and is receiving the proper payload as well.
 from bell.avr.mqtt.client import MQTTModule
-from bell.avr.mqtt.payloads import AvrFcmVelocityPayload
+from bell.avr.mqtt.payloads import AvrFcmVelocityPayload, AvrPcmSetServoOpenClosePayload
 import time
 
 # This imports the third-party Loguru library which helps make logging way easier
@@ -27,11 +27,12 @@ class Sandbox(MQTTModule):
         # we're replacing the `__init__()` method.
         super().__init__()
         logger.debug("Hello world (init)")
-
-        self.send_message("avr/pcm/set_servo_open_close",{"servo": 3, "action": "open"})
+        payload = AvrPcmSetServoOpenClosePayload(servo=3, action="open")
+        self.send_message("avr/pcm/set_servo_open_close",payload)
         logger.debug("Servo Opened")
         time.sleep(1)
-        self.send_message("avr/pcm/set_servo_open_close",{"servo": 3, "action": "close"})
+        payloadClose = AvrPcmSetServoOpenClosePayload(servo=3, action="close")
+        self.send_message("avr/pcm/set_servo_open_close",payloadClose)
         logger.debug("Servo Closed")
         # Here, we're creating a dictionary of MQTT topic names to method handles.
         # A dictionary is a data structure that allows use to
