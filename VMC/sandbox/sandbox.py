@@ -9,8 +9,8 @@ class Sandbox(MQTTModule):
     def __init__(self) -> None:
         super().__init__()
         logger.debug("Hello world (init)")
-        payload = AvrPcmSetBaseColorPayload((128, 232, 142, 0))
-        self.send_message("avr/pcm/set_base_color",payload)
+        #payload = AvrPcmSetBaseColorPayload((128, 232, 142, 0))
+        self.send_message("avr/pcm/set_base_color",{"wrgb": [0, 0, 0, 0]})
         payload = AvrPcmSetServoOpenClosePayload(servo=3, action="open")
         self.send_message("avr/pcm/set_servo_open_close",payload)
         logger.debug("Servo Opened")
