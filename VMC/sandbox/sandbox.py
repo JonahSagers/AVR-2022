@@ -1,30 +1,11 @@
-# Here we import our own MQTT library which takes care of a lot of boilerplate
-# code related to connecting to the MQTT server and sending/receiving messages.
-# It also helps us make sure that our code is sending the proper payload on a topic
-# and is receiving the proper payload as well.
 from bell.avr.mqtt.client import MQTTModule
 from bell.avr.mqtt.payloads import AvrFcmVelocityPayload, AvrPcmSetServoOpenClosePayload
 import time
 
-# This imports the third-party Loguru library which helps make logging way easier
-# and more useful.
-# https://loguru.readthedocs.io/en/stable/
 from loguru import logger
 
-
-# This creates a new class that will contain multiple functions
-# which are known as "methods". This inherits from the MQTTModule class
-# that we imported from our custom MQTT library.
 class Sandbox(MQTTModule):
-    # The "__init__" method of any class is special in Python. It's what runs when
-    # you create a class like `sandbox = Sandbox()`. In here, we usually put
-    # first-time initialization and setup code. The "self" argument is a magic
-    # argument that must be the first argument in any class method. This allows the code
-    # inside the method to access class information.
     def __init__(self) -> None:
-        # This calls the original `__init__()` method of the MQTTModule class.
-        # This runs some setup code that we still want to occur, even though
-        # we're replacing the `__init__()` method.
         super().__init__()
         logger.debug("Hello world (init)")
         payload = AvrPcmSetServoOpenClosePayload(servo=3, action="open")
@@ -34,14 +15,6 @@ class Sandbox(MQTTModule):
         payloadClose = AvrPcmSetServoOpenClosePayload(servo=3, action="close")
         self.send_message("avr/pcm/set_servo_open_close",payloadClose)
         logger.debug("Servo Closed")
-        # Here, we're creating a dictionary of MQTT topic names to method handles.
-        # A dictionary is a data structure that allows use to
-        # obtain values based on keys. Think of a dictionary of state names as keys
-        # and their capitals as values. By using the state name as a key, you can easily
-        # find the associated capital. However, this does not work in reverse. So here,
-        # we're creating a dictionary of MQTT topics, and the methods we want to run
-        # whenever a message arrives on that topic.
-        # --- self.topic_map = {"avr/fcm/velocity": self.show_velocity}
 
     def autonomous_code(self) -> None:
         #while self.enabled:
