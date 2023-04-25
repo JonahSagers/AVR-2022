@@ -1,5 +1,6 @@
 from bell.avr.mqtt.client import MQTTModule
 from bell.avr.mqtt.payloads import AvrFcmVelocityPayload, AvrPcmSetServoOpenClosePayload
+from bell.avr.mqtt.payloads import AvrPcmSetBaseColorPayload
 import time
 
 from loguru import logger
@@ -8,14 +9,15 @@ class Sandbox(MQTTModule):
     def __init__(self) -> None:
         super().__init__()
         logger.debug("Hello world (init)")
+        color_payload = AvrPcmSetBaseColorPayload((128, 232, 142, 0))
         payload = AvrPcmSetServoOpenClosePayload(servo=3, action="open")
+        self.send_message("avr/pcm/set_base_color_payload",color_payload)
         self.send_message("avr/pcm/set_servo_open_close",payload)
         logger.debug("Servo Opened")
         time.sleep(1)
         payloadClose = AvrPcmSetServoOpenClosePayload(servo=3, action="close")
         self.send_message("avr/pcm/set_servo_open_close",payloadClose)
         logger.debug("Servo Closed")
-
     def autonomous_code(self) -> None:
         #while self.enabled:
         logger.debug("button pressed")
