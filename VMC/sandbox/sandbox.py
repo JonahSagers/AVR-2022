@@ -8,9 +8,10 @@ from loguru import logger
 class Sandbox(MQTTModule):
     def __init__(self) -> None:
         super().__init__()
-        logger.debug("Hello world (init)")
-        self.send_message("avr/pcm/set_base_color",{"wrgb": [0, 100, 0, 0]})
-        logger.debug("Light changed")
+        while True:
+            logger.debug("Hello world (init)")
+            self.send_message("avr/pcm/set_base_color",{"wrgb": [0, 100, 0, 0]})
+            logger.debug("Light changed")
 if __name__ == "__main__":
     box = Sandbox()
     box.run()
