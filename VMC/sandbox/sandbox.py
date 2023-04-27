@@ -1,5 +1,4 @@
 import time
-import math
 
 from bell.avr.mqtt.client import MQTTModule
 from bell.avr.mqtt.payloads import AvrPcmSetBaseColorPayload
@@ -12,15 +11,14 @@ class Sandbox(MQTTModule):
 
     def hello_world(self) -> None:
         logger.debug("Hello world")
-        global placeholder
-        placeholder += 1
-        payload = AvrPcmSetBaseColorPayload(wrgb=((1 + math.sin(placeholder)) * 127.5, (1 + math.sin(placeholder)) * 127.5, 0, 0))
+
+        payload = AvrPcmSetBaseColorPayload(wrgb=(255, 255, 0, 0))
         box.send_message("avr/pcm/set_base_color", payload)
+
         logger.debug("Light changed")
 
 
 if __name__ == "__main__":
-    placeholder = 0
     box = Sandbox()
     box.run_non_blocking()
 
