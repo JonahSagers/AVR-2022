@@ -12,16 +12,15 @@ class Sandbox(MQTTModule):
 
     def hello_world(self) -> None:
         logger.debug("Hello world")
-        placeholder = 0
-        while True:
-            placeholder += 1
-            payload = AvrPcmSetBaseColorPayload(wrgb=((1 + math.sin(placeholder)) * 127.5, (1 + math.sin(placeholder)) * 127.5, 0, 0))
-            box.send_message("avr/pcm/set_base_color", payload)
-
+        global placeholder
+        placeholder += 1
+        payload = AvrPcmSetBaseColorPayload(wrgb=((1 + math.sin(placeholder)) * 127.5, (1 + math.sin(placeholder)) * 127.5, 0, 0))
+        box.send_message("avr/pcm/set_base_color", payload)
         logger.debug("Light changed")
 
 
 if __name__ == "__main__":
+    placeholder = 0
     box = Sandbox()
     box.run_non_blocking()
 
