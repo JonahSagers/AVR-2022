@@ -10,6 +10,7 @@ class Sandbox(MQTTModule):
         super().__init__()
         logger.debug("Class initialized")
         self.topic_map = {"avr/fcm/velocity": self.show_velocity}
+        self.topic_map = {"avr/pcm/set_base_color": self.hello_world}
 
     def show_velocity(self) -> None:
         payload = AvrFcmVelocityPayload
