@@ -30,6 +30,7 @@ class Sandbox(MQTTModule):
 if __name__ == "__main__":
     box = Sandbox()
     box.run_non_blocking()
+    time.sleep(1)
     box.show_velocity()
     box.hello_world()
 
