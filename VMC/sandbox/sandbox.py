@@ -10,8 +10,6 @@ class Sandbox(MQTTModule):
         super().__init__()
         logger.debug("Class initialized")
         self.topic_map = {"avr/fcm/velocity": self.show_velocity}
-        box = Sandbox()
-        box.show_velocity()
 
     def show_velocity(self, payload: AvrFcmVelocityPayload) -> None:
         vx = payload["vX"]
@@ -32,7 +30,7 @@ class Sandbox(MQTTModule):
 if __name__ == "__main__":
     box = Sandbox()
     box.run_non_blocking()
-
+    box.show_velocity()
     box.hello_world()
 
     while True:
