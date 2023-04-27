@@ -17,7 +17,7 @@ class Sandbox(MQTTModule):
         vy = payload["vY"]
         vz = payload["vZ"]
         v_ms = (vx, vy, vz)
-        print(f"Velocity information: {v_ms} m/s")
+        logger.debug(f"Velocity information: {v_ms} m/s")
 
     def hello_world(self) -> None:
         logger.debug("Hello world")
