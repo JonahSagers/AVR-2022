@@ -3,18 +3,16 @@ import time
 from bell.avr.mqtt.client import MQTTModule
 from bell.avr.mqtt.payloads import AvrFcmVelocityPayload, AvrPcmSetBaseColorPayload
 from loguru import logger
-placeholder = 1
+
 
 class Sandbox(MQTTModule):
     def __init__(self) -> None:
         super().__init__()
         logger.debug("Class initialized")
         self.topic_map = {"avr/fcm/velocity": self.show_velocity}
-        if placeholder == 1:
-            box.show_velocity()
-            placeholder = 0
 
-    def show_velocity(self, payload: AvrFcmVelocityPayload) -> None:
+    def show_velocity(self) -> None:
+        payload = AvrFcmVelocityPayload
         vx = payload["vX"]
         vy = payload["vY"]
         vz = payload["vZ"]
@@ -33,7 +31,7 @@ class Sandbox(MQTTModule):
 if __name__ == "__main__":
     box = Sandbox()
     box.run_non_blocking()
-    
+    box.show_velocity()
     box.hello_world()
 
     while True:
