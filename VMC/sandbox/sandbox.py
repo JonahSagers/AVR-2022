@@ -12,7 +12,7 @@ class Sandbox(MQTTModule):
     def hello_world(self) -> None:
         logger.debug("Hello world")
 
-        payload = AvrPcmSetBaseColorPayload(wrgb=(0, 0, 255, 0))
+        payload = AvrPcmSetBaseColorPayload(wrgb=(255, 255, 0, 0))
         box.send_message("avr/pcm/set_base_color", payload)
 
         logger.debug("Light changed")
