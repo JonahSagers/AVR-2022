@@ -16,7 +16,7 @@ if __name__ == "__main__":
     placeholder = 0
     while True:
         placeholder += 0.1
-        saturation = 100 + (math.sin(placeholder) * 100)
+        saturation = 50 + (math.sin(placeholder) * 50)
         box.send_message("avr/pcm/set_base_color", {"wrgb": [0, 0, int(saturation), 0]})
         logger.debug(saturation)
         time.sleep(0.025)
