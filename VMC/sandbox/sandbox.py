@@ -21,8 +21,9 @@ class Sandbox(MQTTModule):
 if __name__ == "__main__":
     box = Sandbox()
     box.run_non_blocking()
-
-    box.hello_world()
+    payload = AvrPcmSetBaseColorPayload(wrgb=(0, 0, 255, 0))
+    box.send_message("avr/pcm/set_base_color", payload)
+    #box.hello_world()
 
     while True:
         time.sleep(0.1)
