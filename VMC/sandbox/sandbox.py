@@ -27,7 +27,7 @@ if __name__ == "__main__":
     while True:
         placeholder += 0.01
         saturation = 127.5 + (math.sin(placeholder) * 127.5)
-        #payload = AvrPcmSetBaseColorPayload(wrgb=(0, 0, saturation, 0))
-        box.send_message("avr/pcm/set_base_color", {"wrgb": [0, 0, str(saturation), 0]})
+        payload = AvrPcmSetBaseColorPayload(wrgb=(0, 0, int(saturation), 0))
+        box.send_message("avr/pcm/set_base_color", {"wrgb": [0, 0, 255, 0]})
         logger.debug(saturation)
         time.sleep(0.05)
