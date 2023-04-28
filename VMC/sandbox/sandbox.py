@@ -18,6 +18,6 @@ if __name__ == "__main__":
         placeholder += 0.08
         saturation = 50 + (math.sin(placeholder) * 50)
         box.send_message("avr/pcm/set_base_color", {"wrgb": [0, 0, int(saturation), 0]})
-        box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": 700 + saturation * 15})
+        box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": int(700 + saturation * 15)})
         logger.debug(saturation)
         time.sleep(0.0166)
