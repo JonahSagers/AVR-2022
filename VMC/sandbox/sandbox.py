@@ -15,10 +15,11 @@ if __name__ == "__main__":
     box.run_non_blocking()
     placeholder = 0
     intensity = 0.1
-    box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": 1000})
-    logger.debug("Servo extended")
-    time.sleep(1)
-    box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": 1500})
+    while True:
+        box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": 1000})
+        logger.debug("Servo extended")
+        time.sleep(1)
+        box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": 1500})
     while True:
         placeholder += 0.08
         saturationW = (50 + (math.sin(placeholder) * 50)) * intensity
