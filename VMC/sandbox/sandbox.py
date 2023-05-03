@@ -22,6 +22,6 @@ if __name__ == "__main__":
         saturationG = (50 + (math.sin(placeholder + 3.14) * 50)) * intensity
         saturationB = (50 + (math.sin(placeholder + 4.71) * 50)) * intensity
         box.send_message("avr/pcm/set_base_color", {"wrgb": [int(saturationW), int(saturationR), int(saturationG), int(saturationB)]})
-        #box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": int(700 + saturationR * 15)})
+        box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": int(700 + saturationR * 15)})
         logger.debug(saturationR)
         time.sleep(0.0166)
