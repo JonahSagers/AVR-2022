@@ -18,8 +18,9 @@ if __name__ == "__main__":
     while True:
         box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": 1000})
         logger.debug("Servo extended")
-        time.sleep(1)
+        time.sleep(0.5)
         box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": 1500})
+        time.sleep(0.5)
     while True:
         placeholder += 0.08
         saturationW = (50 + (math.sin(placeholder) * 50)) * intensity
