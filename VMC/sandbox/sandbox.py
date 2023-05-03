@@ -19,13 +19,13 @@ if __name__ == "__main__":
     logger.debug("Servo extended")
     time.sleep(1)
     box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": 1500})
-    # while True:
-    #     placeholder += 0.08
-    #     saturationW = (50 + (math.sin(placeholder) * 50)) * intensity
-    #     saturationR = (50 + (math.sin(placeholder + 1.57) * 50)) * intensity
-    #     saturationG = (50 + (math.sin(placeholder + 3.14) * 50)) * intensity
-    #     saturationB = (50 + (math.sin(placeholder + 4.71) * 50)) * intensity
-    #     box.send_message("avr/pcm/set_base_color", {"wrgb": [int(saturationW), int(saturationR), int(saturationG), int(saturationB)]})
-    #     box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": int(700 + saturationR * 15)})
-    #     logger.debug(saturationR)
-    #     time.sleep(0.0166)
+    while True:
+        placeholder += 0.08
+        saturationW = (50 + (math.sin(placeholder) * 50)) * intensity
+        saturationR = (50 + (math.sin(placeholder + 1.57) * 50)) * intensity
+        saturationG = (50 + (math.sin(placeholder + 3.14) * 50)) * intensity
+        saturationB = (50 + (math.sin(placeholder + 4.71) * 50)) * intensity
+        box.send_message("avr/pcm/set_base_color", {"wrgb": [int(saturationW), int(saturationR), int(saturationG), int(saturationB)]})
+        box.send_message("avr/pcm/set_servo_abs", {"servo": 3, "absolute": int(700 + saturationR * 15)})
+        logger.debug(saturationR)
+        time.sleep(0.0166)
