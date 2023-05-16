@@ -148,10 +148,10 @@ class MQTTConnectionWidget(QtWidgets.QWidget):
         bottom_layout.addWidget(self.state_label)
 
         button_layout = QtWidgets.QHBoxLayout()
-        self.connect_button = QtWidgets.QPushButton("Connect")
+        self.connect_button = QtWidgets.QPushButton("Attack")
         button_layout.addWidget(self.connect_button)
 
-        self.disconnect_button = QtWidgets.QPushButton("Disconnect")
+        self.disconnect_button = QtWidgets.QPushButton("Retreat")
         button_layout.addWidget(self.disconnect_button)
 
         bottom_layout.addLayout(button_layout)
