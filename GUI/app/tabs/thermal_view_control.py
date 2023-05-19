@@ -155,8 +155,8 @@ class JoystickWidget(BaseTabWidget):
         self.current_y = 0
         self.current_x = 0
 
-        self.servoxmin = 10
-        self.servoymin = 10
+        self.servoxmin = 1
+        self.servoymin = 1
         self.servoxmax = 99
         self.servoymax = 99
 
@@ -216,10 +216,10 @@ class JoystickWidget(BaseTabWidget):
         x_servo_abs = round(
             map_value(
             #Note to self: X and Y abs values have been destabilized to support different gimbal types
-                self.current_x + 25, 25, 225, 0, 2400)
+                self.current_x + 25, 0, 225, 0, 2400)
         )
         y_servo_abs = round(
-            map_value(y_reversed, 25, 225, 1700 - (x_servo_abs - 25)/4, 2400 - (x_servo_abs - 25)/4)
+            map_value(y_reversed, 25, 225, 900 - (x_servo_abs)/4, 1600 - (x_servo_abs)/4)
         )
 
         self.move_gimbal_absolute(x_servo_abs, y_servo_abs)
