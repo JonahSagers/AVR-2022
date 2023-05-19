@@ -162,7 +162,7 @@ class JoystickWidget(BaseTabWidget):
 
         # servo declarations
         self.SERVO_ABS_MAX = 0
-        self.SERVO_ABS_MIN = 10000
+        self.SERVO_ABS_MIN = 2400
 
     def _center(self) -> QtCore.QPointF:
         """
@@ -216,10 +216,10 @@ class JoystickWidget(BaseTabWidget):
         x_servo_abs = round(
             map_value(
             #Note to self: X and Y abs values have been destabilized to support different gimbal types
-                self.current_x + 25, 25, 225, 0, 10000)
+                self.current_x + 25, 25, 225, 0, 2400)
         )
         y_servo_abs = round(
-            map_value(y_reversed, 25, 225, 500 - x_servo_abs / 3, 1000 - (x_servo_abs + 25) / 4)
+            map_value(y_reversed, 25, 225, 1700 - (x_servo_abs - 25)/4, 2400 - (x_servo_abs - 25)/4)
         )
 
         self.move_gimbal_absolute(x_servo_abs, y_servo_abs)
