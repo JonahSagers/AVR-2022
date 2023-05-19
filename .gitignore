@@ -7,7 +7,7 @@ __pycache__/
 *.pyc
 
 # python virtual environment for development
-.venv/
+.venv.avr/
 
 # pyright
 node_modules/
