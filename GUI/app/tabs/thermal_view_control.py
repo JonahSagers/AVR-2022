@@ -155,8 +155,8 @@ class JoystickWidget(BaseTabWidget):
         self.current_y = 0
         self.current_x = 0
 
-        self.servoxmin = 1
-        self.servoymin = 1
+        self.servoxmin = 10
+        self.servoymin = 10
         self.servoxmax = 99
         self.servoymax = 99
 
