@@ -4,6 +4,8 @@ import math
 from enum import Enum, auto
 from typing import List, Optional, Tuple
 
+import serial
+
 import colour
 import numpy as np
 import scipy.interpolate
@@ -164,6 +166,8 @@ class JoystickWidget(BaseTabWidget):
         self.SERVO_ABS_MAX = 0
         self.SERVO_ABS_MIN = 2400
 
+        # init arduino
+        self.arduino = serial.Serial(port='/dev/tty.usbmodem834301', baudrate=115200, timeout=.1)
     def _center(self) -> QtCore.QPointF:
         """
         Return the center of the widget.
@@ -216,10 +220,10 @@ class JoystickWidget(BaseTabWidget):
         x_servo_abs = round(
             map_value(
             #Note to self: X and Y abs values have been destabilized to support different gimbal types
-                self.current_x + 25, 0, 225, 0, 2400)
+                self.current_x, 0, 200 , 325, 2400)
         )
         y_servo_abs = round(
-            map_value(y_reversed, 25, 225, 900 - (x_servo_abs)/4, 1600 - (x_servo_abs)/4)
+            map_value(y_reversed, 0, 200, 900 - (x_servo_abs)/4, 1600 - (x_servo_abs)/4)
         )
 
         self.move_gimbal_absolute(x_servo_abs, y_servo_abs)
@@ -313,6 +317,14 @@ class JoystickWidget(BaseTabWidget):
         self.current_y = (
             moving_offset_y - self._center().y() + self.__max_distance
         )
+        # data = self.arduino.readline().decode('utf-8')
+        # data = data.strip()
+        # if(len(data) > 0):
+        #     self.current_x = int(data[:4])
+        #     self.current_y = int(data[5:9])
+        #     print(self.current_x)
+        #     print(self.current_y)
+        # current values are saved as a integer between 0 and 200 on either axis
 
         rate_limit(self.update_servos, frequency=50)
 
