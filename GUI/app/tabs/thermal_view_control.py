@@ -225,9 +225,18 @@ class JoystickWidget(BaseTabWidget):
         y_servo_abs = round(
             map_value(y_reversed, 0, 200, 900 - (x_servo_abs)/4, 1600 - (x_servo_abs)/4)
         )
+        print("AAAAA")
 
         self.move_gimbal_absolute(x_servo_abs, y_servo_abs)
-
+    def update_arduinos(self):
+        data = self.arduino.readline().decode('utf-8')
+        data = data.strip()
+        if(len(data) > 0):
+            self.current_x = int(data[:4])
+            self.current_y = int(data[5:9])
+            print(self.current_x)
+            print(self.current_y)
+        self.update_servos()
     def _center_ellipse(self) -> QtCore.QRectF:
         # sourcery skip: assign-if-exp
         if self.grab_center:
@@ -302,31 +311,25 @@ class JoystickWidget(BaseTabWidget):
         self.update()
 
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
-        if self.grab_center:
-            self.moving_offset = self._bound_joystick(event.pos())
-            self.update()
+        self.update_arduinos()
+        # if self.grab_center:
+        #     self.moving_offset = self._bound_joystick(event.pos())
+        #     self.update()
 
-        moving_offset_y = self.moving_offset.y()
-        if not config.joystick_inverted:
-            moving_offset_y = self.height() - moving_offset_y
+        # moving_offset_y = self.moving_offset.y()
+        # if not config.joystick_inverted:
+        #     moving_offset_y = self.height() - moving_offset_y
 
         # print(self.joystick_direction())
-        self.current_x = (
-            self.moving_offset.x() - self._center().x() + self.__max_distance
-        )
-        self.current_y = (
-            moving_offset_y - self._center().y() + self.__max_distance
-        )
-        # data = self.arduino.readline().decode('utf-8')
-        # data = data.strip()
-        # if(len(data) > 0):
-        #     self.current_x = int(data[:4])
-        #     self.current_y = int(data[5:9])
-        #     print(self.current_x)
-        #     print(self.current_y)
-        # current values are saved as a integer between 0 and 200 on either axis
+        # # self.current_x = (
+        # #     self.moving_offset.x() - self._center().x() + self.__max_distance
+        # # )
+        # # self.current_y = (
+        # #     moving_offset_y - self._center().y() + self.__max_distance
+        # # )
+        # # current values are saved as a integer between 0 and 200 on either axis
 
-        rate_limit(self.update_servos, frequency=50)
+        # rate_limit(self.update_servos, frequency=50)
 
 
 class ThermalViewControlWidget(BaseTabWidget):
@@ -488,6 +491,7 @@ class ThermalViewControlWidget(BaseTabWidget):
         # update the canvase
         # pixel_ints = data
         self.viewer.update_canvas(pixel_ints)
+        self.joystick.update_arduinos()
 
     def clear(self) -> None:
         self.viewer.canvas.clear()
