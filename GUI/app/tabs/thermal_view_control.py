@@ -5,6 +5,8 @@ from enum import Enum, auto
 from typing import List, Optional, Tuple
 
 import serial
+import time
+from threading import Timer
 
 import colour
 import numpy as np
@@ -142,6 +144,35 @@ class ThermalView(QtWidgets.QWidget):
                     brush,
                 )
 
+class RepeatedTimer(object):
+    def __init__(self, interval, function, *args, **kwargs):
+        self._timer     = None
+        self.interval   = interval
+        self.function   = function
+        self.args       = args
+        self.kwargs     = kwargs
+        self.is_running = False
+        self.start()
+
+    def _run(self):
+        self.is_running = False
+        self.start()
+        self.function(*self.args, **self.kwargs)
+
+    def start(self):
+        if not self.is_running:
+            self._timer = Timer(self.interval, self._run)
+            self._timer.start()
+            self.is_running = True
+
+    def stop(self):
+        self._timer.cancel()
+        self.is_running = False
+
+class ArdUpdate():
+    def startArd(self):
+        self.joystick = JoystickWidget(self)
+        rt = RepeatedTimer(0.1, self.joystick.update_arduinos)
 
 class JoystickWidget(BaseTabWidget):
     def __init__(self, parent: QtWidgets.QWidget) -> None:
@@ -167,7 +198,10 @@ class JoystickWidget(BaseTabWidget):
         self.SERVO_ABS_MIN = 2400
 
         # init arduino
-        self.arduino = serial.Serial(port='/dev/tty.usbmodem834301', baudrate=115200, timeout=.1)
+        self.arduino = serial.Serial(port='COM5', baudrate=115200, timeout=.1)
+        # rt = RepeatedTimer(1, self.update_arduinos)
+        # self.ard = ArdUpdate()
+        # self.ard.startArd()
     def _center(self) -> QtCore.QPointF:
         """
         Return the center of the widget.
@@ -225,7 +259,6 @@ class JoystickWidget(BaseTabWidget):
         y_servo_abs = round(
             map_value(y_reversed, 0, 200, 900 - (x_servo_abs)/4, 1600 - (x_servo_abs)/4)
         )
-        print("AAAAA")
 
         self.move_gimbal_absolute(x_servo_abs, y_servo_abs)
     def update_arduinos(self):
@@ -233,7 +266,7 @@ class JoystickWidget(BaseTabWidget):
         data = data.strip()
         if(len(data) > 0):
             self.current_x = int(data[:4])
-            self.current_y = int(data[5:9])
+            self.current_y = int(data[5:8])
             print(self.current_x)
             print(self.current_y)
         self.update_servos()
@@ -491,7 +524,7 @@ class ThermalViewControlWidget(BaseTabWidget):
         # update the canvase
         # pixel_ints = data
         self.viewer.update_canvas(pixel_ints)
-        self.joystick.update_arduinos()
+        #self.joystick.update_arduinos()
 
     def clear(self) -> None:
         self.viewer.canvas.clear()
