@@ -5,6 +5,7 @@ from enum import Enum, auto
 from typing import List, Optional, Tuple
 
 import serial
+import time
 
 import colour
 import numpy as np
@@ -167,7 +168,7 @@ class JoystickWidget(BaseTabWidget):
         self.SERVO_ABS_MIN = 2400
 
         # init arduino
-        self.arduino = serial.Serial(port='/dev/tty.usbmodem834301', baudrate=115200, timeout=.1)
+        self.arduino = serial.Serial(port='/dev/tty.usbmodem834101', baudrate=115200, timeout=.1)
     def _center(self) -> QtCore.QPointF:
         """
         Return the center of the widget.
@@ -463,6 +464,10 @@ class ThermalViewControlWidget(BaseTabWidget):
 
         self.send_message(topic, payload)
         self.laser_toggle_label.setText(wrap_text(text, color))
+        while(True):
+            #self.joystick.update_arduinos()
+            rate_limit(self.joystick.update_arduinos(), frequency=50)
+            time.sleep(0.05)
 
     def calibrate_temp(self) -> None:
         self.viewer.set_calibrted_temp_range()
@@ -491,7 +496,6 @@ class ThermalViewControlWidget(BaseTabWidget):
         # update the canvase
         # pixel_ints = data
         self.viewer.update_canvas(pixel_ints)
-        self.joystick.update_arduinos()
 
     def clear(self) -> None:
         self.viewer.canvas.clear()
