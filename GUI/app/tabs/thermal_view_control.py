@@ -198,7 +198,7 @@ class JoystickWidget(BaseTabWidget):
         self.SERVO_ABS_MIN = 2400
 
         # init arduino
-        self.arduino = serial.Serial(port='COM5', baudrate=115200, timeout=.1)
+        # self.arduino = serial.Serial(port='COM5', baudrate=115200, timeout=.1)
         # rt = RepeatedTimer(1, self.update_arduinos)
         # self.ard = ArdUpdate()
         # self.ard.startArd()
@@ -344,25 +344,25 @@ class JoystickWidget(BaseTabWidget):
         self.update()
 
     def mouseMoveEvent(self, event: QtGui.QMouseEvent) -> None:
-        self.update_arduinos()
-        # if self.grab_center:
-        #     self.moving_offset = self._bound_joystick(event.pos())
-        #     self.update()
+        # self.update_arduinos()
+        if self.grab_center:
+            self.moving_offset = self._bound_joystick(event.pos())
+            self.update()
 
-        # moving_offset_y = self.moving_offset.y()
-        # if not config.joystick_inverted:
-        #     moving_offset_y = self.height() - moving_offset_y
+        moving_offset_y = self.moving_offset.y()
+        if not config.joystick_inverted:
+            moving_offset_y = self.height() - moving_offset_y
 
-        # print(self.joystick_direction())
-        # # self.current_x = (
-        # #     self.moving_offset.x() - self._center().x() + self.__max_distance
-        # # )
-        # # self.current_y = (
-        # #     moving_offset_y - self._center().y() + self.__max_distance
-        # # )
-        # # current values are saved as a integer between 0 and 200 on either axis
+        print(self.joystick_direction())
+        self.current_x = (
+            self.moving_offset.x() - self._center().x() + self.__max_distance
+        )
+        self.current_y = (
+            moving_offset_y - self._center().y() + self.__max_distance
+        )
+        # current values are saved as a integer between 0 and 200 on either axis
 
-        # rate_limit(self.update_servos, frequency=50)
+        rate_limit(self.update_servos, frequency=50)
 
 
 class ThermalViewControlWidget(BaseTabWidget):
