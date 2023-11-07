@@ -18,6 +18,8 @@ class Sandbox(MQTTModule):
     def autonomous_code(self) -> None:
         while self.enabled:
             box.send_message("avr/pcm/set_base_color", {"wrgb": [255, 255, 255, 255]})
+            print("Setting Color To White")
+            time.sleep(1)
 
 if __name__ == "__main__":
     box = Sandbox()
