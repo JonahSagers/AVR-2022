@@ -4,7 +4,7 @@ import math
 from bell.avr.mqtt.client import MQTTModule
 from bell.avr.mqtt.payloads import AvrPcmSetBaseColorPayload, AvrPcmSetServoAbsPayload, AvrAutonomousPayload
 from loguru import logger
-# Okay
+# i hate the minions
 class Sandbox(MQTTModule):
     def __init__(self) -> None:
         super().__init__()
